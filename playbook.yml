@@ -1,6 +1,30 @@
 ---
 - hosts: all
   gather_facts: true
-  tasks:
-    - command: id
-
+  roles:
+     - role: stackhpc.libvirt-host
+       libvirt_host_pools:
+         - name: vm
+           type: dir
+           capacity: 131072
+           path: /srv/vms
+           mode: 755
+           owner: mnt
+           group: mnt
+       libvirt_host_networks:
+         - name: libvirt-ether
+           mode: bridge
+           bridge: enp4s0
+         - name: libvirt-public
+         - name: libvirt-mgmt
+           mode: bridge
+           bridge: vmgmt
+         - name: libvirt-public
+           mode: bridge
+           bridge: vpublic
+         - name: libvirt-private
+           mode: bridge
+           bridge: vprivate
+         - name: libvirt-san
+           mode: bridge
+           bridge: vsan
